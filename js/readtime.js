@@ -34,9 +34,6 @@ function startAnimation(){
     }
     
     var chunk, isSentenceEnd, i;
-    // var tl = new TimelineMax(),
-    //     time = 0,
-    //     chunk, element, duration, isSentenceEnd, i;
     
     for (i = 0; i < chunks.length; i++) {
       chunk = chunks[i];
@@ -47,7 +44,8 @@ function startAnimation(){
           duration += 0.6; //if it's the last word in a sentence, drag out the timing a bit for a dramatic pause.
         }
 
-        doAnimation();
+        // doAnimationStyle1();
+        doAnimationStyle2();
 
         time += duration - 0.05;
         if (isSentenceEnd) {
@@ -57,11 +55,35 @@ function startAnimation(){
 
   }
 
-  deliverText("Ut sed vel arcu turpis sed tincidunt dictumst scelerisque scelerisque amet cum habitasse purus egestas eu pulvinar integer integer tortor augue lundium amet Montes enim Ultricies turpis ad egestas sociis tincidunt, enim ultrics sed amet etiam cursus urna dictumst rhoncus lectus diam ultricies aliquam augue lectus turpis aliquet lorem urna.", 340);
+  deliverText("Ut sed vel arcu turpis sed tincidunt dictumst scelerisque scelerisque amet cum habitasse purus egestas eu pulvinar integer integer tortor augue lundium.", 340);
+  // deliverText("Ut sed vel arcu turpis sed tincidunt dictumst scelerisque scelerisque amet cum habitasse purus egestas eu pulvinar integer integer tortor augue lundium amet Montes enim Ultricies turpis ad egestas sociis tincidunt, enim ultrics sed amet etiam cursus urna dictumst rhoncus lectus diam ultricies aliquam augue lectus turpis aliquet lorem urna.", 340);
 
 }
 
-function doAnimation(){
+function doAnimationStyle1(){
+  var tl = new TimelineMax();
+    //set opacity and scale to 0 initially. We set z to 0.01 just to kick in 3D rendering in the browser which makes things render a bit more smoothly.
+  TweenLite.set(element, {autoAlpha:0, y:-100, z:0.01});
+  
+  tl.to(element, duration, {y:200,  ease:SlowMo.ease.config(0.8, 0.8)}, time)
+    //notice the 3rd parameter of the SlowMo config is true in the following tween to make it yoyo. 
+    .to(element, duration, {autoAlpha:1, ease:SlowMo.ease.config(0.5, 0.9, true)}, time);
+}
+
+function doAnimationStyle2(){
+  var tl = new TimelineMax();
+    //set opacity and scale to 0 initially. We set z to 0.01 just to kick in 3D rendering in the browser which makes things render a bit more smoothly.
+  TweenLite.set(element, {autoAlpha:0, y:-100, z:0.01});
+  
+  tl.to(element, duration, {y:200,  ease:SlowMo.ease.config(0.8, 0.8)}, time)
+    //notice the 3rd parameter of the SlowMo config is true in the following tween to make it yoyo. 
+    .to(element, duration, {autoAlpha:1, ease:SlowMo.ease.config(0.5, 0.9, true)}, time);
+
+  //tweenHue();
+  tweenBodyHue();
+}
+
+function doAnimationStyle3(){
   var tl = new TimelineMax();
     //set opacity and scale to 0 initially. We set z to 0.01 just to kick in 3D rendering in the browser which makes things render a bit more smoothly.
   TweenLite.set(element, {autoAlpha:0, scale:0, z:0.01});
@@ -69,6 +91,34 @@ function doAnimation(){
   tl.to(element, duration, {scale:1.5,  ease:SlowMo.ease.config(0.25, 0.9)}, time)
     //notice the 3rd parameter of the SlowMo config is true in the following tween - that causes it to yoyo, meaning opacity (autoAlpha) will go up to 1 during the tween, and then back down to 0 at the end. 
     .to(element, duration, {autoAlpha:1, ease:SlowMo.ease.config(0.25, 0.9, true)}, time);
+}
+
+function tweenHue(){
+  var element = $("#demotxt")[0]
+    color = {h:0, s:50, l:50};
+
+  console.log(element);
+
+  TweenMax.to(color, 20, {h:360, onUpdate:applyColor, ease:Linear.easeNone, repeat:-1});
+
+  function applyColor() {
+  
+    element.style.backgroundColor = "hsl(" + color.h + "," + color.s + "%," + color.l + "%)";
+  }
+}
+
+function tweenBodyHue(){
+  var element = document.getElementsByTagName("body")[0]
+    color = {h:0, s:20, l:20};
+
+  console.log(element);
+
+  TweenMax.to(color, 10, {h:360, onUpdate:applyColor, ease:Linear.easeNone, repeat:-1});
+
+  function applyColor() {
+  
+    element.style.backgroundColor = "hsl(" + color.h + "," + color.s + "%," + color.l + "%)";
+  }
 }
 
 
