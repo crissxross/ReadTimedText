@@ -79,7 +79,7 @@ function doAnimationStyle2(){
     //notice the 3rd parameter of the SlowMo config is true in the following tween to make it yoyo. 
     .to(element, duration, {autoAlpha:1, ease:SlowMo.ease.config(0.5, 0.9, true)}, time);
 
-  //tweenHue();
+  tweenHue();
   tweenBodyHue();
 }
 
@@ -94,8 +94,8 @@ function doAnimationStyle3(){
 }
 
 function tweenHue(){
-  var element = $("#demotxt")[0]
-    color = {h:0, s:50, l:50};
+  var element = $("#demotxt")[0],
+    color = {h:0, s:20, l:30};
 
   console.log(element);
 
@@ -108,12 +108,12 @@ function tweenHue(){
 }
 
 function tweenBodyHue(){
-  var element = document.getElementsByTagName("body")[0]
-    color = {h:0, s:20, l:20};
+  var element = document.getElementsByTagName("body")[0],
+    color = {h:0, s:20, l:70};
 
   console.log(element);
 
-  TweenMax.to(color, 10, {h:360, onUpdate:applyColor, ease:Linear.easeNone, repeat:-1});
+  TweenMax.to(color, 30, {h:360, onUpdate:applyColor, ease:Linear.easeNone, repeat:-1});
 
   function applyColor() {
   
